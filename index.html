@@ -1136,7 +1136,7 @@
 
     <script>
         const facebookReviewsConfig = {
-            // Use a secure backend endpoint that proxies the Facebook Graph API.
+            // Use a secure backend endpoint that proxies the Facebook Graph API (e.g., https://yourdomain.com/api/facebook-reviews).
             reviewsEndpoint: '',
             // Example formats: https://www.facebook.com/YourPage or https://www.facebook.com/pages/PageName/1234567890
             pageBaseUrl: 'https://www.facebook.com/YOUR_PAGE_NAME_HERE'
@@ -1171,8 +1171,12 @@
         };
 
         const buildStars = (ratingValue) => {
-            const rating = Number.isFinite(ratingValue) ? ratingValue : 5;
-            const normalized = Math.min(Math.max(Math.round(rating), 1), 5);
+            const normalized = Number.isFinite(ratingValue)
+                ? Math.min(Math.max(Math.round(ratingValue), 1), 5)
+                : 0;
+            if (normalized === 0) {
+                return '☆☆☆☆☆';
+            }
             return `${'★'.repeat(normalized)}${'☆'.repeat(5 - normalized)}`;
         };
 
@@ -1256,7 +1260,7 @@
             try {
                 const response = await fetch(facebookReviewsConfig.reviewsEndpoint);
                 if (!response.ok) {
-                    throw new Error('Facebook reviews request failed.');
+                    throw new Error(`Facebook reviews request failed (${response.status}).`);
                 }
 
                 const payload = await response.json();
