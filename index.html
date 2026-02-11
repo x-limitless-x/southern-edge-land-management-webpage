@@ -1019,11 +1019,11 @@
                 <p class="section-description">Don't just take our word for it – hear from property owners who've experienced the Southern Edge difference.</p>
             </div>
             <div class="reviews-intro">
-                <p class="section-description">We pull our latest recommendations straight from Facebook so you always see current feedback.</p>
+                <p class="section-description">We showcase recent Facebook recommendations alongside our featured testimonials below.</p>
                 <p class="reviews-status" id="facebook-reviews-status" aria-live="polite">Loading the latest Facebook reviews...</p>
                 <div class="reviews-actions">
-                    <a class="reviews-link" data-facebook-link="page" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">📘 Visit Our Facebook Page</a>
-                    <a class="reviews-link" data-facebook-link="review" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">✍️ Leave a Review</a>
+                    <a class="reviews-link" data-facebook-link="page" href="#" rel="noopener noreferrer">📘 Visit Our Facebook Page</a>
+                    <a class="reviews-link" data-facebook-link="review" href="#" rel="noopener noreferrer">✍️ Leave a Review</a>
                 </div>
             </div>
             <div class="testimonials-grid" id="facebook-reviews">
@@ -1159,12 +1159,26 @@
             }
 
             reviewLinks.forEach((link) => {
-                if (link.dataset.facebookLink === 'page' && facebookPageUrl) {
-                    link.href = facebookPageUrl;
+                const isPageLink = link.dataset.facebookLink === 'page';
+                const isReviewLink = link.dataset.facebookLink === 'review';
+                const targetUrl = isPageLink ? facebookPageUrl : isReviewLink ? facebookReviewUrl : '';
+
+                if (targetUrl) {
+                    link.href = targetUrl;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    link.removeAttribute('aria-disabled');
+                    return;
                 }
-                if (link.dataset.facebookLink === 'review' && facebookReviewUrl) {
-                    link.href = facebookReviewUrl;
-                }
+
+                link.href = '#';
+                link.removeAttribute('target');
+                link.setAttribute('aria-disabled', 'true');
+                link.addEventListener('click', (event) => {
+                    if (link.getAttribute('aria-disabled') === 'true') {
+                        event.preventDefault();
+                    }
+                });
             });
         };
 
@@ -1183,7 +1197,7 @@
 
         const buildStars = (ratingValue) => {
             const normalized = Number.isFinite(ratingValue)
-                ? Math.min(Math.max(Math.round(ratingValue), 1), 5)
+                ? Math.min(Math.max(Math.round(ratingValue), 0), 5)
                 : 0;
             if (normalized === 0) {
                 return '☆☆☆☆☆';
@@ -1274,6 +1288,7 @@
                     throw new Error(`Facebook reviews request failed (${response.status}).`);
                 }
 
+                // Expected review fields from Facebook: review_text, reviewer{name}, rating, created_time.
                 const payload = await response.json();
                 const reviews = extractReviews(payload);
                 const trimmed = reviews
