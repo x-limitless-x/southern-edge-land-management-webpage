@@ -1136,7 +1136,9 @@
 
     <script>
         const facebookReviewsConfig = {
+            // Use a secure backend endpoint that proxies the Facebook Graph API.
             reviewsEndpoint: '',
+            // Example formats: https://www.facebook.com/YourPage or https://www.facebook.com/pages/PageName/1234567890
             pageUrl: 'https://www.facebook.com/YOUR_PAGE_NAME_HERE',
             reviewUrl: 'https://www.facebook.com/YOUR_PAGE_NAME_HERE/reviews/'
         };
@@ -1230,10 +1232,15 @@
             }
 
             const fallbackCards = Array.from(reviewsContainer.children).map((card) => card.cloneNode(true));
+            const showFallbackReviews = (message) => {
+                reviewsContainer.innerHTML = '';
+                fallbackCards.forEach((card) => reviewsContainer.appendChild(card));
+                reviewsStatus.textContent = message;
+            };
             updateReviewLinks();
 
             if (!facebookReviewsConfig.reviewsEndpoint) {
-                reviewsStatus.textContent = 'Add your secure Facebook reviews endpoint to show live reviews here.';
+                showFallbackReviews('Add your secure Facebook reviews endpoint to show live reviews here.');
                 return;
             }
 
@@ -1251,7 +1258,9 @@
                         : Array.isArray(payload.reviews)
                             ? payload.reviews
                             : [];
-                const trimmed = reviews.filter((review) => review.review_text || review.rating).slice(0, maxReviewsToDisplay);
+                const trimmed = reviews
+                    .filter((review) => typeof review.review_text === 'string' && review.review_text.trim().length > 0)
+                    .slice(0, maxReviewsToDisplay);
 
                 if (!trimmed.length) {
                     reviewsStatus.textContent = 'No Facebook reviews are available yet. Check back soon!';
@@ -1265,9 +1274,7 @@
 
                 reviewsStatus.textContent = `Showing ${trimmed.length} recent Facebook review${trimmed.length === 1 ? '' : 's'}.`;
             } catch (error) {
-                reviewsContainer.innerHTML = '';
-                fallbackCards.forEach((card) => reviewsContainer.appendChild(card));
-                reviewsStatus.textContent = 'Unable to load Facebook reviews right now. Showing our featured testimonials instead.';
+                showFallbackReviews('Unable to load Facebook reviews right now. Showing our featured testimonials instead.');
             }
         };
 
