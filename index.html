@@ -1139,8 +1139,7 @@
             // Use a secure backend endpoint that proxies the Facebook Graph API.
             reviewsEndpoint: '',
             // Example formats: https://www.facebook.com/YourPage or https://www.facebook.com/pages/PageName/1234567890
-            pageUrl: 'https://www.facebook.com/YOUR_PAGE_NAME_HERE',
-            reviewUrl: 'https://www.facebook.com/YOUR_PAGE_NAME_HERE/reviews/'
+            pageBaseUrl: 'https://www.facebook.com/YOUR_PAGE_NAME_HERE'
         };
 
         const maxReviewsToDisplay = 3;
@@ -1148,6 +1147,13 @@
         const reviewsStatus = document.getElementById('facebook-reviews-status');
         const reviewsContainer = document.getElementById('facebook-reviews');
         const reviewLinks = document.querySelectorAll('[data-facebook-link]');
+        const fallbackCards = reviewsContainer
+            ? Array.from(reviewsContainer.children).map((card) => card.cloneNode(true))
+            : [];
+        const facebookPageUrl = facebookReviewsConfig.pageBaseUrl
+            ? facebookReviewsConfig.pageBaseUrl.replace(/\/$/, '')
+            : '';
+        const facebookReviewUrl = facebookPageUrl ? `${facebookPageUrl}/reviews/` : '';
 
         const updateReviewLinks = () => {
             if (!reviewLinks.length) {
@@ -1155,11 +1161,11 @@
             }
 
             reviewLinks.forEach((link) => {
-                if (link.dataset.facebookLink === 'page' && facebookReviewsConfig.pageUrl) {
-                    link.href = facebookReviewsConfig.pageUrl;
+                if (link.dataset.facebookLink === 'page' && facebookPageUrl) {
+                    link.href = facebookPageUrl;
                 }
-                if (link.dataset.facebookLink === 'review' && facebookReviewsConfig.reviewUrl) {
-                    link.href = facebookReviewsConfig.reviewUrl;
+                if (link.dataset.facebookLink === 'review' && facebookReviewUrl) {
+                    link.href = facebookReviewUrl;
                 }
             });
         };
@@ -1200,7 +1206,11 @@
 
             const text = document.createElement('p');
             text.className = 'testimonial-text';
-            text.textContent = review.review_text || 'Shared a recommendation on Facebook.';
+            const ratingValue = Number(review.rating);
+            const fallbackMessage = Number.isFinite(ratingValue)
+                ? `Rated ${Math.round(ratingValue)} stars on Facebook.`
+                : 'Shared a recommendation on Facebook.';
+            text.textContent = review.review_text?.trim() ? review.review_text.trim() : fallbackMessage;
 
             const author = document.createElement('p');
             author.className = 'testimonial-author';
@@ -1231,7 +1241,6 @@
                 return;
             }
 
-            const fallbackCards = Array.from(reviewsContainer.children).map((card) => card.cloneNode(true));
             const showFallbackReviews = (message) => {
                 reviewsContainer.innerHTML = '';
                 fallbackCards.forEach((card) => reviewsContainer.appendChild(card));
@@ -1259,7 +1268,11 @@
                             ? payload.reviews
                             : [];
                 const trimmed = reviews
-                    .filter((review) => typeof review.review_text === 'string' && review.review_text.trim().length > 0)
+                    .filter((review) => {
+                        const hasText = typeof review.review_text === 'string' && review.review_text.trim().length > 0;
+                        const ratingValue = Number(review.rating);
+                        return hasText || Number.isFinite(ratingValue);
+                    })
                     .slice(0, maxReviewsToDisplay);
 
                 if (!trimmed.length) {
