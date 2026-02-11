@@ -1020,10 +1020,10 @@
             </div>
             <div class="reviews-intro">
                 <p class="section-description">We pull our latest recommendations straight from Facebook so you always see current feedback.</p>
-                <p class="reviews-status" id="facebook-reviews-status">Loading the latest Facebook reviews...</p>
+                <p class="reviews-status" id="facebook-reviews-status" aria-live="polite">Loading the latest Facebook reviews...</p>
                 <div class="reviews-actions">
-                    <a class="reviews-link" data-facebook-link="page" href="#" target="_blank" rel="noopener noreferrer">📘 Visit Our Facebook Page</a>
-                    <a class="reviews-link" data-facebook-link="review" href="#" target="_blank" rel="noopener noreferrer">✍️ Leave a Review</a>
+                    <a class="reviews-link" data-facebook-link="page" href="https://www.facebook.com/YOUR_PAGE_NAME_HERE" target="_blank" rel="noopener noreferrer">📘 Visit Our Facebook Page</a>
+                    <a class="reviews-link" data-facebook-link="review" href="https://www.facebook.com/YOUR_PAGE_NAME_HERE/reviews/" target="_blank" rel="noopener noreferrer">✍️ Leave a Review</a>
                 </div>
             </div>
             <div class="testimonials-grid" id="facebook-reviews">
@@ -1170,6 +1170,19 @@
             });
         };
 
+        const extractReviews = (payload) => {
+            if (Array.isArray(payload)) {
+                return payload;
+            }
+            if (payload && Array.isArray(payload.data)) {
+                return payload.data;
+            }
+            if (payload && Array.isArray(payload.reviews)) {
+                return payload.reviews;
+            }
+            return [];
+        };
+
         const buildStars = (ratingValue) => {
             const normalized = Number.isFinite(ratingValue)
                 ? Math.min(Math.max(Math.round(ratingValue), 1), 5)
@@ -1214,7 +1227,8 @@
             const fallbackMessage = Number.isFinite(ratingValue)
                 ? `Rated ${Math.round(ratingValue)} stars on Facebook.`
                 : 'Shared a recommendation on Facebook.';
-            text.textContent = review.review_text?.trim() ? review.review_text.trim() : fallbackMessage;
+            const trimmedText = review.trimmedText ?? '';
+            text.textContent = trimmedText ? trimmedText : fallbackMessage;
 
             const author = document.createElement('p');
             author.className = 'testimonial-author';
@@ -1264,16 +1278,14 @@
                 }
 
                 const payload = await response.json();
-                const reviews = Array.isArray(payload)
-                    ? payload
-                    : Array.isArray(payload.data)
-                        ? payload.data
-                        : Array.isArray(payload.reviews)
-                            ? payload.reviews
-                            : [];
+                const reviews = extractReviews(payload);
                 const trimmed = reviews
+                    .map((review) => {
+                        const trimmedText = typeof review.review_text === 'string' ? review.review_text.trim() : '';
+                        return { ...review, trimmedText };
+                    })
                     .filter((review) => {
-                        const hasText = typeof review.review_text === 'string' && review.review_text.trim().length > 0;
+                        const hasText = review.trimmedText.length > 0;
                         const ratingValue = Number(review.rating);
                         return hasText || Number.isFinite(ratingValue);
                     })
