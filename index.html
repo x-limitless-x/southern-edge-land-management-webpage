@@ -1137,9 +1137,11 @@
     <script>
         const facebookReviewsConfig = {
             reviewsEndpoint: '',
-            pageUrl: 'https://www.facebook.com/your-business-page',
-            reviewUrl: 'https://www.facebook.com/your-business-page/reviews/'
+            pageUrl: 'https://www.facebook.com/YOUR_PAGE_NAME_HERE',
+            reviewUrl: 'https://www.facebook.com/YOUR_PAGE_NAME_HERE/reviews/'
         };
+
+        const maxReviewsToDisplay = 3;
 
         const reviewsStatus = document.getElementById('facebook-reviews-status');
         const reviewsContainer = document.getElementById('facebook-reviews');
@@ -1249,7 +1251,7 @@
                         : Array.isArray(payload.reviews)
                             ? payload.reviews
                             : [];
-                const trimmed = reviews.filter((review) => review.review_text || review.rating).slice(0, 3);
+                const trimmed = reviews.filter((review) => review.review_text || review.rating).slice(0, maxReviewsToDisplay);
 
                 if (!trimmed.length) {
                     reviewsStatus.textContent = 'No Facebook reviews are available yet. Check back soon!';
