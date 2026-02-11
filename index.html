@@ -1022,8 +1022,8 @@
                 <p class="section-description">We pull our latest recommendations straight from Facebook so you always see current feedback.</p>
                 <p class="reviews-status" id="facebook-reviews-status" aria-live="polite">Loading the latest Facebook reviews...</p>
                 <div class="reviews-actions">
-                    <a class="reviews-link" data-facebook-link="page" href="https://www.facebook.com/YOUR_PAGE_NAME_HERE" target="_blank" rel="noopener noreferrer">📘 Visit Our Facebook Page</a>
-                    <a class="reviews-link" data-facebook-link="review" href="https://www.facebook.com/YOUR_PAGE_NAME_HERE/reviews/" target="_blank" rel="noopener noreferrer">✍️ Leave a Review</a>
+                    <a class="reviews-link" data-facebook-link="page" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">📘 Visit Our Facebook Page</a>
+                    <a class="reviews-link" data-facebook-link="review" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">✍️ Leave a Review</a>
                 </div>
             </div>
             <div class="testimonials-grid" id="facebook-reviews">
@@ -1139,7 +1139,7 @@
             // Use a secure backend endpoint that proxies the Facebook Graph API (e.g., https://yourdomain.com/api/facebook-reviews).
             reviewsEndpoint: '',
             // Example formats: https://www.facebook.com/YourPage or https://www.facebook.com/pages/PageName/1234567890
-            pageBaseUrl: 'https://www.facebook.com/YOUR_PAGE_NAME_HERE'
+            pageBaseUrl: ''
         };
 
         const maxReviewsToDisplay = 3;
@@ -1147,9 +1147,7 @@
         const reviewsStatus = document.getElementById('facebook-reviews-status');
         const reviewsContainer = document.getElementById('facebook-reviews');
         const reviewLinks = document.querySelectorAll('[data-facebook-link]');
-        const fallbackCards = reviewsContainer
-            ? Array.from(reviewsContainer.children).map((card) => card.cloneNode(true))
-            : [];
+        const fallbackMarkup = reviewsContainer ? reviewsContainer.innerHTML : '';
         const facebookPageUrl = facebookReviewsConfig.pageBaseUrl
             ? facebookReviewsConfig.pageBaseUrl.replace(/\/$/, '')
             : '';
@@ -1227,8 +1225,8 @@
             const fallbackMessage = Number.isFinite(ratingValue)
                 ? `Rated ${Math.round(ratingValue)} stars on Facebook.`
                 : 'Shared a recommendation on Facebook.';
-            const trimmedText = review.trimmedText ?? '';
-            text.textContent = trimmedText ? trimmedText : fallbackMessage;
+            const reviewText = review.trimmedText ?? '';
+            text.textContent = reviewText ? reviewText : fallbackMessage;
 
             const author = document.createElement('p');
             author.className = 'testimonial-author';
@@ -1260,8 +1258,7 @@
             }
 
             const showFallbackReviews = (message) => {
-                reviewsContainer.innerHTML = '';
-                fallbackCards.forEach((card) => reviewsContainer.appendChild(card));
+                reviewsContainer.innerHTML = fallbackMarkup;
                 reviewsStatus.textContent = message;
             };
             updateReviewLinks();
