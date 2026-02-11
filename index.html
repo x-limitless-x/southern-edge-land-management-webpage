@@ -1136,8 +1136,7 @@
 
     <script>
         const facebookReviewsConfig = {
-            pageId: '',
-            accessToken: '',
+            reviewsEndpoint: '',
             pageUrl: 'https://www.facebook.com/your-business-page',
             reviewUrl: 'https://www.facebook.com/your-business-page/reviews/'
         };
@@ -1228,26 +1227,28 @@
                 return;
             }
 
-            const fallbackCards = Array.from(reviewsContainer.children);
+            const fallbackCards = Array.from(reviewsContainer.children).map((card) => card.cloneNode(true));
             updateReviewLinks();
 
-            if (!facebookReviewsConfig.pageId || !facebookReviewsConfig.accessToken) {
-                reviewsStatus.textContent = 'Add your Facebook Page ID and Access Token to show live reviews here.';
+            if (!facebookReviewsConfig.reviewsEndpoint) {
+                reviewsStatus.textContent = 'Add your secure Facebook reviews endpoint to show live reviews here.';
                 return;
             }
 
             try {
-                const endpoint = new URL(`https://graph.facebook.com/v19.0/${facebookReviewsConfig.pageId}/ratings`);
-                endpoint.searchParams.set('access_token', facebookReviewsConfig.accessToken);
-                endpoint.searchParams.set('fields', 'review_text,reviewer{name},rating,created_time');
-
-                const response = await fetch(endpoint.toString());
+                const response = await fetch(facebookReviewsConfig.reviewsEndpoint);
                 if (!response.ok) {
                     throw new Error('Facebook reviews request failed.');
                 }
 
                 const payload = await response.json();
-                const reviews = Array.isArray(payload.data) ? payload.data : [];
+                const reviews = Array.isArray(payload)
+                    ? payload
+                    : Array.isArray(payload.data)
+                        ? payload.data
+                        : Array.isArray(payload.reviews)
+                            ? payload.reviews
+                            : [];
                 const trimmed = reviews.filter((review) => review.review_text || review.rating).slice(0, 3);
 
                 if (!trimmed.length) {
