@@ -14,6 +14,8 @@
     --color-accent-yellow: #ffd700;
     --color-accent-yellow-light: #ffed4e;
     --color-accent-blue: #1e3a8a;
+    --color-accent-blue-light: #2563eb;
+    --color-accent-purple: #7c3aed;
     --color-accent-orange: #ff6b35;
     --color-accent-orange-light: #ff8c42;
     
@@ -78,6 +80,14 @@ body {
 
 h1, h2, h3, h4 {
     font-family: var(--font-family-heading);
+}
+
+a {
+    color: var(--color-accent-blue-light);
+}
+
+a:visited {
+    color: var(--color-accent-purple);
 }
 
 .container {
@@ -153,6 +163,10 @@ header .tagline {
 
 .header-phone:hover {
     color: var(--color-accent-yellow-light);
+}
+
+.header-phone:visited {
+    color: var(--color-accent-yellow);
 }
 
 .header-cta-small {
@@ -234,6 +248,10 @@ header .tagline {
     background: linear-gradient(135deg, #ff5722 0%, var(--color-accent-orange) 100%);
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(255, 107, 53, 0.7);
+}
+
+.cta-button:visited {
+    color: var(--color-white);
 }
 
 /* ============================================
@@ -614,6 +632,10 @@ header .tagline {
     transform: translateY(-2px);
 }
 
+.reviews-link:visited {
+    color: #4267b2;
+}
+
 .review-meta {
     margin-top: var(--spacing-sm);
     display: flex;
@@ -831,6 +853,19 @@ footer {
     content: '→ ';
     color: var(--color-primary-green-light);
     font-weight: bold;
+}
+
+.footer-section a {
+    color: rgba(255,255,255,0.8);
+    transition: color 0.3s ease;
+}
+
+.footer-section a:visited {
+    color: rgba(255,255,255,0.7);
+}
+
+.footer-section a:hover {
+    color: var(--color-accent-yellow);
 }
 
 .footer-bottom {
