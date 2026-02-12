@@ -115,7 +115,7 @@ header {
 }
 
 .logo-image {
-    height: 60px;
+    height: 80px;
     width: auto;
     object-fit: contain;
 }
@@ -866,7 +866,7 @@ footer {
 
 @media (max-width: 768px) {
     .logo-image {
-        height: 50px;
+        height: 65px;
     }
 
     .logo-section {
