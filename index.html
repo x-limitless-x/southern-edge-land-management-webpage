@@ -434,7 +434,7 @@
         const facebookPageUrl = facebookReviewsConfig.pageBaseUrl
             ? facebookReviewsConfig.pageBaseUrl.replace(/\/$/, '')
             : '';
-        const facebookReviewUrl = facebookPageUrl ? `${facebookPageUrl}&sk=reviews/` : '';
+        const facebookReviewUrl = facebookPageUrl ? `${facebookPageUrl}&sk=reviews` : '';
 
         const updateReviewLinks = () => {
             if (!reviewLinks.length) {
