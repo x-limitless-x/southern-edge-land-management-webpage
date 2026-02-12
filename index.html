@@ -473,6 +473,108 @@
             margin-bottom: 1rem;
         }
 
+        .reviews-intro {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .reviews-status {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .reviews-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .reviews-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.7rem 1.6rem;
+            border-radius: 30px;
+            border: 2px solid #4267b2;
+            color: #4267b2;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background: #f0f4ff;
+        }
+
+        .reviews-link:hover {
+            background: #4267b2;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .review-meta {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #666;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .review-source {
+            color: #4267b2;
+            font-weight: 700;
+        }
+
+        /* Project Gallery */
+        .gallery {
+            padding: 5rem 0;
+            background: linear-gradient(to bottom, #ffffff 0%, #f3f7f4 100%);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            border: 1px solid rgba(44, 85, 48, 0.08);
+            text-align: center;
+        }
+
+        .gallery-card h3 {
+            color: #2c5530;
+            margin: 1.2rem 0 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .gallery-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .gallery-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            background: linear-gradient(135deg, #2c5530 0%, #4a7c4e 100%);
+            color: #fff;
+            box-shadow: 0 6px 15px rgba(44, 85, 48, 0.3);
+        }
+
         /* Contact Section */
         .contact {
             padding: 5rem 0;
@@ -880,6 +982,34 @@
         </div>
     </section>
 
+    <!-- Project Gallery -->
+    <section class="gallery">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-subtitle">Project Highlights</p>
+                <h2>Recent Transformations</h2>
+                <p class="section-description">A quick look at the types of land management projects we handle most often for homeowners, builders, and property managers.</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-card">
+                    <div class="gallery-icon">🌲</div>
+                    <h3>Land Clearing Makeovers</h3>
+                    <p>Selective clearing, brush removal, and forestry mulching that open up properties while preserving healthy trees and natural contours.</p>
+                </div>
+                <div class="gallery-card">
+                    <div class="gallery-icon">💧</div>
+                    <h3>Drainage & Grading Fixes</h3>
+                    <p>Precision grading, culvert installs, and custom drainage plans that keep water moving away from foundations and driveways.</p>
+                </div>
+                <div class="gallery-card">
+                    <div class="gallery-icon">🛣️</div>
+                    <h3>Driveway & Access Builds</h3>
+                    <p>Durable driveway installs and site access improvements that boost curb appeal, usability, and long-term property value.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Testimonials -->
     <section class="testimonials">
         <div class="container">
@@ -888,7 +1018,15 @@
                 <h2>What Our Customers Say</h2>
                 <p class="section-description">Don't just take our word for it – hear from property owners who've experienced the Southern Edge difference.</p>
             </div>
-            <div class="testimonials-grid">
+            <div class="reviews-intro">
+                <p class="section-description">We showcase recent Facebook recommendations alongside our featured testimonials below.</p>
+                <p class="reviews-status" id="facebook-reviews-status" aria-live="polite">Loading the latest Facebook reviews...</p>
+                <div class="reviews-actions">
+                    <a class="reviews-link" data-facebook-link="page" href="#" rel="noopener noreferrer">📘 Visit Our Facebook Page</a>
+                    <a class="reviews-link" data-facebook-link="review" href="#" rel="noopener noreferrer">✍️ Leave a Review</a>
+                </div>
+            </div>
+            <div class="testimonials-grid" id="facebook-reviews">
                 <div class="testimonial-card">
                     <div class="quote-icon">"</div>
                     <div class="stars">★★★★★</div>
@@ -897,6 +1035,10 @@
                     </p>
                     <p class="testimonial-author">— Sarah M.</p>
                     <p class="testimonial-location">Residential Customer</p>
+                    <div class="review-meta">
+                        <span>Local Homeowner</span>
+                        <span class="review-source">Facebook Review</span>
+                    </div>
                 </div>
                 <div class="testimonial-card">
                     <div class="quote-icon">"</div>
@@ -906,6 +1048,10 @@
                     </p>
                     <p class="testimonial-author">— Mike T.</p>
                     <p class="testimonial-location">Commercial Developer</p>
+                    <div class="review-meta">
+                        <span>New Build Project</span>
+                        <span class="review-source">Facebook Review</span>
+                    </div>
                 </div>
                 <div class="testimonial-card">
                     <div class="quote-icon">"</div>
@@ -915,6 +1061,10 @@
                     </p>
                     <p class="testimonial-author">— Jennifer L.</p>
                     <p class="testimonial-location">Homeowner</p>
+                    <div class="review-meta">
+                        <span>Driveway Upgrade</span>
+                        <span class="review-source">Facebook Review</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -983,5 +1133,193 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        const facebookReviewsConfig = {
+            // Use a secure backend endpoint that proxies the Facebook Graph API (e.g., https://yourdomain.com/api/facebook-reviews).
+            reviewsEndpoint: '',
+            // Example formats: https://www.facebook.com/YourPage or https://www.facebook.com/pages/PageName/1234567890
+            pageBaseUrl: ''
+        };
+
+        const maxReviewsToDisplay = 3;
+
+        const reviewsStatus = document.getElementById('facebook-reviews-status');
+        const reviewsContainer = document.getElementById('facebook-reviews');
+        const reviewLinks = document.querySelectorAll('[data-facebook-link]');
+        const fallbackMarkup = reviewsContainer ? reviewsContainer.innerHTML : '';
+        const facebookPageUrl = facebookReviewsConfig.pageBaseUrl
+            ? facebookReviewsConfig.pageBaseUrl.replace(/\/$/, '')
+            : '';
+        const facebookReviewUrl = facebookPageUrl ? `${facebookPageUrl}/reviews/` : '';
+
+        const updateReviewLinks = () => {
+            if (!reviewLinks.length) {
+                return;
+            }
+
+            reviewLinks.forEach((link) => {
+                const isPageLink = link.dataset.facebookLink === 'page';
+                const isReviewLink = link.dataset.facebookLink === 'review';
+                const targetUrl = isPageLink ? facebookPageUrl : isReviewLink ? facebookReviewUrl : '';
+
+                if (targetUrl) {
+                    link.href = targetUrl;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    link.removeAttribute('aria-disabled');
+                    return;
+                }
+
+                link.href = '#';
+                link.removeAttribute('target');
+                link.setAttribute('aria-disabled', 'true');
+                link.addEventListener('click', (event) => {
+                    if (link.getAttribute('aria-disabled') === 'true') {
+                        event.preventDefault();
+                    }
+                });
+            });
+        };
+
+        const extractReviews = (payload) => {
+            if (Array.isArray(payload)) {
+                return payload;
+            }
+            if (payload && Array.isArray(payload.data)) {
+                return payload.data;
+            }
+            if (payload && Array.isArray(payload.reviews)) {
+                return payload.reviews;
+            }
+            return [];
+        };
+
+        const buildStars = (ratingValue) => {
+            const normalized = Number.isFinite(ratingValue)
+                ? Math.min(Math.max(Math.round(ratingValue), 0), 5)
+                : 0;
+            if (normalized === 0) {
+                return '☆☆☆☆☆';
+            }
+            return `${'★'.repeat(normalized)}${'☆'.repeat(5 - normalized)}`;
+        };
+
+        const formatReviewDate = (dateValue) => {
+            if (!dateValue) {
+                return 'Recent Review';
+            }
+
+            const parsed = new Date(dateValue);
+            if (Number.isNaN(parsed.getTime())) {
+                return 'Recent Review';
+            }
+
+            return new Intl.DateTimeFormat('en-US', {
+                month: 'short',
+                year: 'numeric'
+            }).format(parsed);
+        };
+
+        const createReviewCard = (review) => {
+            const card = document.createElement('div');
+            card.className = 'testimonial-card';
+
+            const quote = document.createElement('div');
+            quote.className = 'quote-icon';
+            quote.textContent = '"';
+
+            const stars = document.createElement('div');
+            stars.className = 'stars';
+            stars.textContent = buildStars(Number(review.rating));
+
+            const text = document.createElement('p');
+            text.className = 'testimonial-text';
+            const ratingValue = Number(review.rating);
+            const fallbackMessage = Number.isFinite(ratingValue)
+                ? `Rated ${Math.round(ratingValue)} stars on Facebook.`
+                : 'Shared a recommendation on Facebook.';
+            const reviewText = review.trimmedText ?? '';
+            text.textContent = reviewText ? reviewText : fallbackMessage;
+
+            const author = document.createElement('p');
+            author.className = 'testimonial-author';
+            author.textContent = review.reviewer?.name ? `— ${review.reviewer.name}` : '— Facebook Reviewer';
+
+            const location = document.createElement('p');
+            location.className = 'testimonial-location';
+            location.textContent = 'Facebook Recommendation';
+
+            const meta = document.createElement('div');
+            meta.className = 'review-meta';
+
+            const date = document.createElement('span');
+            date.textContent = formatReviewDate(review.created_time);
+
+            const source = document.createElement('span');
+            source.className = 'review-source';
+            source.textContent = 'Facebook Review';
+
+            meta.append(date, source);
+            card.append(quote, stars, text, author, location, meta);
+
+            return card;
+        };
+
+        const loadFacebookReviews = async () => {
+            if (!reviewsContainer || !reviewsStatus) {
+                return;
+            }
+
+            const showFallbackReviews = (message) => {
+                reviewsContainer.innerHTML = fallbackMarkup;
+                reviewsStatus.textContent = message;
+            };
+            updateReviewLinks();
+
+            if (!facebookReviewsConfig.reviewsEndpoint) {
+                showFallbackReviews('Add your secure Facebook reviews endpoint to show live reviews here.');
+                return;
+            }
+
+            try {
+                const response = await fetch(facebookReviewsConfig.reviewsEndpoint);
+                if (!response.ok) {
+                    throw new Error(`Facebook reviews request failed (${response.status}).`);
+                }
+
+                // Expected review fields from Facebook: review_text, reviewer{name}, rating, created_time.
+                const payload = await response.json();
+                const reviews = extractReviews(payload);
+                const trimmed = reviews
+                    .map((review) => {
+                        const trimmedText = typeof review.review_text === 'string' ? review.review_text.trim() : '';
+                        return { ...review, trimmedText };
+                    })
+                    .filter((review) => {
+                        const hasText = review.trimmedText.length > 0;
+                        const ratingValue = Number(review.rating);
+                        return hasText || Number.isFinite(ratingValue);
+                    })
+                    .slice(0, maxReviewsToDisplay);
+
+                if (!trimmed.length) {
+                    reviewsStatus.textContent = 'No Facebook reviews are available yet. Check back soon!';
+                    return;
+                }
+
+                reviewsContainer.innerHTML = '';
+                trimmed.forEach((review) => {
+                    reviewsContainer.appendChild(createReviewCard(review));
+                });
+
+                reviewsStatus.textContent = `Showing ${trimmed.length} recent Facebook review${trimmed.length === 1 ? '' : 's'}.`;
+            } catch (error) {
+                showFallbackReviews('Unable to load Facebook reviews right now. Showing our featured testimonials instead.');
+            }
+        };
+
+        loadFacebookReviews();
+    </script>
 </body>
 </html>
