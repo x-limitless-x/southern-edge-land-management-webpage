@@ -841,6 +841,122 @@ footer {
 }
 
 /* ============================================
+   Footer Legal Links
+   ============================================ */
+
+.footer-legal-links {
+    margin-top: var(--spacing-sm);
+}
+
+.footer-legal-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-legal-links a:hover {
+    color: var(--color-accent-yellow);
+}
+
+.footer-link-separator {
+    margin: 0 0.5rem;
+    opacity: 0.5;
+}
+
+/* ============================================
+   Policy Pages (Privacy Policy & Data Deletion)
+   ============================================ */
+
+.policy-page {
+    padding: var(--spacing-xl) 0;
+    background: var(--color-background-gradient);
+}
+
+.policy-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.policy-content h2 {
+    font-size: 2.5rem;
+    color: var(--color-primary-green);
+    margin-bottom: var(--spacing-xs);
+    font-weight: 800;
+}
+
+.policy-effective-date {
+    font-size: 0.95rem;
+    color: var(--color-gray);
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+}
+
+.policy-content h3 {
+    font-size: 1.4rem;
+    color: var(--color-primary-green);
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
+    font-weight: 700;
+}
+
+.policy-content p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-gray-dark);
+    margin-bottom: var(--spacing-sm);
+}
+
+.policy-content ul,
+.policy-content ol {
+    margin-bottom: var(--spacing-sm);
+    padding-left: 1.5rem;
+}
+
+.policy-content li {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-gray-dark);
+    margin-bottom: var(--spacing-xs);
+}
+
+.policy-content a {
+    color: var(--color-primary-green);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.policy-content a:hover {
+    color: var(--color-primary-green-light);
+}
+
+.deletion-method {
+    background: var(--color-white);
+    padding: 1.5rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--spacing-sm);
+    border-left: 4px solid var(--color-primary-green);
+    box-shadow: var(--shadow-sm);
+}
+
+.deletion-method h4 {
+    font-size: 1.15rem;
+    color: var(--color-primary-green);
+    margin-bottom: var(--spacing-xs);
+}
+
+.policy-back-link {
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-gray-medium);
+}
+
+.policy-back-link a {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* ============================================
    Responsive Design
    ============================================ */
 
