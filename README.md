@@ -311,11 +311,13 @@ See [LICENSE](LICENSE) file for details.
 - [x] Contact forms and click-to-call
 - [x] Privacy policy and data deletion pages
 - [x] Custom domain setup (southernedgelm.com)
+- [x] Project photo gallery with real images
+- [x] Image lazy loading for performance
 
 ### 🎯 Planned Enhancements
 - [ ] Backend API for live Facebook reviews
-- [ ] Image optimization and lazy loading
-- [ ] Project photo gallery with lightbox
+- [ ] Advanced image optimization (compression, WebP format)
+- [ ] Photo gallery lightbox for full-screen viewing
 - [ ] Before/after image comparisons
 - [ ] Service area map integration
 - [ ] Customer testimonial video embeds
