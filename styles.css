@@ -699,8 +699,8 @@ header .tagline {
     position: absolute;
     top: 1.5rem;
     right: 1.5rem;
-    background: linear-gradient(135deg, var(--color-accent-gold) 0%, var(--color-accent-orange) 100%);
-    color: var(--color-white);
+    background: linear-gradient(135deg, var(--color-accent-yellow) 0%, var(--color-accent-orange) 100%);
+    color: var(--color-primary-gray-darker);
     padding: 0.6rem 1.2rem;
     border-radius: 25px;
     font-weight: 700;
