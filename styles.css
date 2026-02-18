@@ -4,13 +4,17 @@
    ============================================ */
 
 :root {
-    /* Primary Brand Colors from Logo */
-    --color-primary-green: #2c5530;
-    --color-primary-green-light: #4a7c4e;
-    --color-primary-green-dark: #1b4d20;
-    --color-primary-green-darker: #0f2613;
+    /* Primary Brand Colors - Gray/Silver Theme */
+    --color-primary-gray: #4a5568;
+    --color-primary-gray-light: #718096;
+    --color-primary-gray-dark: #2d3748;
+    --color-primary-gray-darker: #1a202c;
+    --color-primary-silver: #a0aec0;
+    --color-primary-silver-light: #cbd5e0;
+    --color-primary-charcoal: #374151;
+    --color-primary-slate: #475569;
     
-    /* Accent Colors from Logo */
+    /* Accent Colors for Engagement */
     --color-accent-yellow: #ffd700;
     --color-accent-yellow-light: #ffed4e;
     --color-accent-blue: #1e3a8a;
@@ -101,7 +105,7 @@ a:visited {
    ============================================ */
 
 header {
-    background: linear-gradient(135deg, var(--color-primary-green-dark) 0%, var(--color-primary-green) 50%, #3d6b42 100%);
+    background: linear-gradient(135deg, var(--color-primary-gray-darker) 0%, var(--color-primary-gray-dark) 50%, var(--color-primary-charcoal) 100%);
     color: var(--color-white);
     padding: 1.5rem 0;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -180,8 +184,8 @@ header .tagline {
    ============================================ */
 
 .hero {
-    background: linear-gradient(135deg, rgba(27, 77, 32, 0.92) 0%, rgba(44, 85, 48, 0.88) 50%, rgba(61, 107, 66, 0.85) 100%), 
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 800"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%233d6b42;stop-opacity:1" /><stop offset="100%" style="stop-color:%231b4d20;stop-opacity:1" /></linearGradient></defs><rect fill="url(%23grad1)" width="1440" height="800"/><path fill="%232c5530" opacity="0.4" d="M0,400 Q360,300 720,400 T1440,400 L1440,800 L0,800 Z"/><path fill="%231b4d20" opacity="0.3" d="M0,500 Q360,450 720,500 T1440,500 L1440,800 L0,800 Z"/><circle cx="200" cy="150" r="80" fill="%234a7c4e" opacity="0.2"/><circle cx="1200" cy="250" r="120" fill="%234a7c4e" opacity="0.15"/><circle cx="700" cy="100" r="60" fill="%2366b366" opacity="0.2"/></svg>');
+    background: linear-gradient(135deg, rgba(45, 55, 72, 0.92) 0%, rgba(74, 85, 104, 0.88) 50%, rgba(113, 128, 150, 0.85) 100%), 
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 800"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23475569;stop-opacity:1" /><stop offset="100%" style="stop-color:%232d3748;stop-opacity:1" /></linearGradient></defs><rect fill="url(%23grad1)" width="1440" height="800"/><path fill="%234a5568" opacity="0.4" d="M0,400 Q360,300 720,400 T1440,400 L1440,800 L0,800 Z"/><path fill="%232d3748" opacity="0.3" d="M0,500 Q360,450 720,500 T1440,500 L1440,800 L0,800 Z"/><circle cx="200" cy="150" r="80" fill="%23718096" opacity="0.2"/><circle cx="1200" cy="250" r="120" fill="%23718096" opacity="0.15"/><circle cx="700" cy="100" r="60" fill="%23a0aec0" opacity="0.2"/></svg>');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -198,7 +202,7 @@ header .tagline {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 30% 50%, rgba(102, 179, 102, 0.1) 0%, transparent 50%);
+    background: radial-gradient(circle at 30% 50%, rgba(160, 174, 192, 0.1) 0%, transparent 50%);
 }
 
 .hero-content {
@@ -283,7 +287,7 @@ header .tagline {
 
 .feature-item h4 {
     font-size: 1.1rem;
-    color: var(--color-primary-green);
+    color: var(--color-primary-slate);
     margin-bottom: var(--spacing-xs);
     font-weight: 700;
 }
@@ -328,7 +332,7 @@ header .tagline {
 .services h2 {
     font-size: 3rem;
     margin-bottom: var(--spacing-sm);
-    color: var(--color-primary-green);
+    color: var(--color-primary-slate);
     font-weight: 800;
 }
 
@@ -370,7 +374,7 @@ header .tagline {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, var(--color-primary-green), var(--color-primary-green-light));
+    background: linear-gradient(90deg, var(--color-primary-slate), var(--color-primary-silver));
     transform: scaleX(0);
     transition: transform 0.3s ease;
 }
@@ -382,7 +386,7 @@ header .tagline {
 .service-card:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-lg);
-    border-color: var(--color-primary-green-light);
+    border-color: var(--color-primary-silver);
 }
 
 .service-icon {
@@ -395,7 +399,7 @@ header .tagline {
 .service-card h3 {
     font-size: 1.6rem;
     margin-bottom: var(--spacing-sm);
-    color: var(--color-primary-green);
+    color: var(--color-primary-gray-dark);
     font-weight: 700;
 }
 
@@ -411,7 +415,7 @@ header .tagline {
 
 .why-choose {
     padding: var(--spacing-xl) 0;
-    background: linear-gradient(135deg, var(--color-primary-green) 0%, #3d6b42 100%);
+    background: linear-gradient(135deg, var(--color-primary-slate) 0%, var(--color-primary-gray-dark) 100%);
     color: var(--color-white);
 }
 
@@ -468,7 +472,7 @@ header .tagline {
 }
 
 .about h2 {
-    color: var(--color-primary-green);
+    color: var(--color-primary-slate);
 }
 
 .about-content {
@@ -485,7 +489,7 @@ header .tagline {
 
 .about-text h3 {
     font-size: 1.8rem;
-    color: var(--color-primary-green);
+    color: var(--color-primary-gray-dark);
     margin-bottom: 1.5rem;
     font-weight: 700;
 }
@@ -516,7 +520,7 @@ header .tagline {
 .stat-number {
     font-size: 3rem;
     font-weight: 800;
-    color: var(--color-primary-green);
+    color: var(--color-primary-slate);
     display: block;
     line-height: 1;
 }
@@ -538,7 +542,7 @@ header .tagline {
 }
 
 .testimonials h2 {
-    color: var(--color-primary-green);
+    color: var(--color-primary-slate);
 }
 
 .testimonials-grid {
@@ -558,7 +562,7 @@ header .tagline {
 
 .quote-icon {
     font-size: 3rem;
-    color: var(--color-primary-green-light);
+    color: var(--color-primary-silver);
     opacity: 0.3;
     position: absolute;
     top: 1.5rem;
@@ -577,7 +581,7 @@ header .tagline {
 
 .testimonial-author {
     font-weight: 700;
-    color: var(--color-primary-green);
+    color: var(--color-primary-gray-dark);
     font-size: 1.1rem;
 }
 
@@ -671,7 +675,7 @@ header .tagline {
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-    border: 1px solid rgba(44, 85, 48, 0.1);
+    border: 1px solid rgba(113, 128, 150, 0.15);
 }
 
 .featured-image {
@@ -696,7 +700,7 @@ header .tagline {
     top: 1.5rem;
     right: 1.5rem;
     background: linear-gradient(135deg, var(--color-accent-gold) 0%, var(--color-accent-orange) 100%);
-    color: var(--color-primary-green-dark);
+    color: var(--color-white);
     padding: 0.6rem 1.2rem;
     border-radius: 25px;
     font-weight: 700;
@@ -712,7 +716,7 @@ header .tagline {
 }
 
 .featured-content h3 {
-    color: var(--color-primary-green);
+    color: var(--color-primary-gray-dark);
     font-size: 2rem;
     margin-bottom: 1rem;
     font-weight: 700;
@@ -734,12 +738,12 @@ header .tagline {
 .tag {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background: rgba(44, 85, 48, 0.08);
-    color: var(--color-primary-green);
+    background: rgba(113, 128, 150, 0.12);
+    color: var(--color-primary-slate);
     border-radius: 20px;
     font-size: 0.9rem;
     font-weight: 600;
-    border: 1px solid rgba(44, 85, 48, 0.15);
+    border: 1px solid rgba(113, 128, 150, 0.2);
 }
 
 /* Photo Gallery Grid */
@@ -783,7 +787,7 @@ header .tagline {
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(to top, rgba(27, 77, 32, 0.95) 0%, rgba(27, 77, 32, 0.7) 70%, transparent 100%);
+    background: linear-gradient(to top, rgba(45, 55, 72, 0.95) 0%, rgba(45, 55, 72, 0.7) 70%, transparent 100%);
     padding: 1.5rem;
     transform: translateY(0);
     transition: transform 0.3s ease;
@@ -815,12 +819,12 @@ header .tagline {
     border-radius: var(--radius-md);
     padding: var(--spacing-md);
     box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    border: 1px solid rgba(44, 85, 48, 0.08);
+    border: 1px solid rgba(113, 128, 150, 0.12);
     text-align: center;
 }
 
 .gallery-card h3 {
-    color: var(--color-primary-green);
+    color: var(--color-primary-gray-dark);
     margin: 1.2rem 0 0.8rem;
     font-size: 1.3rem;
 }
@@ -839,9 +843,9 @@ header .tagline {
     align-items: center;
     justify-content: center;
     font-size: 2rem;
-    background: linear-gradient(135deg, var(--color-primary-green) 0%, var(--color-primary-green-light) 100%);
+    background: linear-gradient(135deg, var(--color-primary-slate) 0%, var(--color-primary-gray) 100%);
     color: var(--color-white);
-    box-shadow: 0 6px 15px rgba(44, 85, 48, 0.3);
+    box-shadow: 0 6px 15px rgba(74, 85, 104, 0.3);
 }
 
 /* ============================================
@@ -850,7 +854,7 @@ header .tagline {
 
 .contact {
     padding: var(--spacing-xl) 0;
-    background: linear-gradient(135deg, var(--color-primary-green-dark) 0%, var(--color-primary-green) 50%, #3d6b42 100%);
+    background: linear-gradient(135deg, var(--color-primary-gray-darker) 0%, var(--color-primary-gray-dark) 50%, var(--color-primary-charcoal) 100%);
     color: var(--color-white);
     text-align: center;
     position: relative;
@@ -959,7 +963,7 @@ header .tagline {
    ============================================ */
 
 footer {
-    background: var(--color-primary-green-darker);
+    background: var(--color-primary-gray-darker);
     color: var(--color-white);
     padding: var(--spacing-lg) 0 1.5rem;
 }
@@ -994,7 +998,7 @@ footer {
 
 .footer-section ul li::before {
     content: '→ ';
-    color: var(--color-primary-green-light);
+    color: var(--color-primary-silver-light);
     font-weight: bold;
 }
 
@@ -1057,7 +1061,7 @@ footer {
 
 .policy-content h2 {
     font-size: 2.5rem;
-    color: var(--color-primary-green);
+    color: var(--color-primary-slate);
     margin-bottom: var(--spacing-xs);
     font-weight: 800;
 }
@@ -1071,7 +1075,7 @@ footer {
 
 .policy-content h3 {
     font-size: 1.4rem;
-    color: var(--color-primary-green);
+    color: var(--color-primary-slate);
     margin-top: var(--spacing-md);
     margin-bottom: var(--spacing-xs);
     font-weight: 700;
@@ -1098,13 +1102,13 @@ footer {
 }
 
 .policy-content a {
-    color: var(--color-primary-green);
+    color: var(--color-primary-slate);
     font-weight: 600;
     text-decoration: underline;
 }
 
 .policy-content a:hover {
-    color: var(--color-primary-green-light);
+    color: var(--color-primary-gray);
 }
 
 .deletion-method {
@@ -1112,13 +1116,13 @@ footer {
     padding: 1.5rem;
     border-radius: var(--radius-sm);
     margin-bottom: var(--spacing-sm);
-    border-left: 4px solid var(--color-primary-green);
+    border-left: 4px solid var(--color-primary-slate);
     box-shadow: var(--shadow-sm);
 }
 
 .deletion-method h4 {
     font-size: 1.15rem;
-    color: var(--color-primary-green);
+    color: var(--color-primary-slate);
     margin-bottom: var(--spacing-xs);
 }
 
