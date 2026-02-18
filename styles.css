@@ -38,6 +38,10 @@
     --color-background-alt: var(--color-gray-light);
     --color-background-gradient: linear-gradient(to bottom, var(--color-gray-light) 0%, var(--color-white) 100%);
     
+    /* Layout */
+    --header-height: 120px;
+    --header-height-mobile: 180px;
+    
     /* Spacing */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
@@ -80,6 +84,7 @@ body {
     line-height: 1.6;
     color: var(--color-text);
     overflow-x: hidden;
+    padding-top: var(--header-height);
 }
 
 h1, h2, h3, h4 {
@@ -109,8 +114,10 @@ header {
     color: var(--color-white);
     padding: 1.5rem 0;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
 }
 
@@ -1177,6 +1184,10 @@ footer {
 }
 
 @media (max-width: 768px) {
+    body {
+        padding-top: var(--header-height-mobile);
+    }
+
     .logo-image {
         height: 65px;
     }
@@ -1212,8 +1223,12 @@ footer {
         grid-template-columns: 1fr;
     }
 
+    .contact-info p {
+        font-size: 1.2rem;
+    }
+
     .contact-info a {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
 
     .cta-button {
