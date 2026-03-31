@@ -1041,8 +1041,8 @@ header .tagline {
     transition: color 0.3s ease;
     font-size: 2.5rem;
     display: inline-block;
-    overflow-wrap: break-word;
-    word-break: break-word;
+    overflow-wrap: anywhere;
+    word-break: break-all;
 }
 
 .contact-info a:hover {
@@ -1366,7 +1366,8 @@ footer {
 
     .contact-info {
         display: block;
-        padding: var(--spacing-md);
+        padding: var(--spacing-sm) var(--spacing-md);
+        overflow: hidden;
     }
 
     .contact-info p {
@@ -1375,7 +1376,7 @@ footer {
 
     .contact-info a {
         display: inline;
-        font-size: 1.4rem;
+        font-size: 1.1rem;
     }
 
     .cta-button {
