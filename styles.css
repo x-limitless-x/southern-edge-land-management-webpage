@@ -1357,6 +1357,10 @@ footer {
         padding-top: var(--header-height-mobile);
     }
 
+    .contact-content {
+        width: 100%;
+    }
+
     .logo-image {
         height: 65px;
     }
@@ -1411,8 +1415,14 @@ footer {
 
     .contact-info {
         display: block;
+        width: 100%;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        box-sizing: border-box;
         padding: var(--spacing-sm) var(--spacing-md);
         overflow: hidden;
+        border-radius: var(--radius-md);
     }
 
     .contact-info p {
@@ -1420,10 +1430,18 @@ footer {
     }
 
     .contact-info a {
-        display: inline;
-        font-size: clamp(1rem, 4.5vw, 1.5rem);
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        font-size: clamp(1rem, 5.5vw, 1.35rem);
+        line-height: 1.3;
         word-break: break-all;
         overflow-wrap: anywhere;
+    }
+
+    .contact-details {
+        grid-template-columns: 1fr;
+        max-width: 100%;
     }
 
     .cta-button {
