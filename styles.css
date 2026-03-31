@@ -49,6 +49,9 @@
     --spacing-lg: 3rem;
     --spacing-xl: 5rem;
 
+    /* Hero image vertical focus (adjust to show more of top or bottom of image) */
+    --hero-image-position-y: 60%;
+
     --about-me-image-focus-x: 58%;
     --about-me-image-focus-y: 40%;
     --about-me-image-min-width: 18rem;
@@ -209,7 +212,8 @@ header .tagline {
 .hero {
     background-image: url('assets/hero-background.jpg');
     background-size: cover;
-    background-position: center center;
+    /* allow vertical focus via variable so we can show the tractor more easily */
+    background-position: center var(--hero-image-position-y, center);
     background-repeat: no-repeat;
     background-attachment: fixed;
     color: var(--color-white);
