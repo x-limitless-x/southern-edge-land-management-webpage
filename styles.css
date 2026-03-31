@@ -1364,15 +1364,17 @@ footer {
         grid-template-columns: 1fr;
     }
 
+    .contact-info {
+        display: block;
+        padding: var(--spacing-md);
+    }
+
     .contact-info p {
         font-size: 1.2rem;
     }
 
-    .contact-info {
-        padding: var(--spacing-md);
-    }
-
     .contact-info a {
+        display: inline;
         font-size: 1.4rem;
     }
 
