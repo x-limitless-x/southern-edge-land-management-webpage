@@ -1022,6 +1022,8 @@ header .tagline {
     padding: var(--spacing-lg);
     border-radius: var(--radius-lg);
     display: inline-block;
+    max-width: 100%;
+    box-sizing: border-box;
     margin-bottom: var(--spacing-md);
     border: 2px solid rgba(255,255,255,0.2);
 }
@@ -1039,6 +1041,8 @@ header .tagline {
     transition: color 0.3s ease;
     font-size: 2.5rem;
     display: inline-block;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .contact-info a:hover {
@@ -1364,8 +1368,12 @@ footer {
         font-size: 1.2rem;
     }
 
+    .contact-info {
+        padding: var(--spacing-md);
+    }
+
     .contact-info a {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
     }
 
     .cta-button {
