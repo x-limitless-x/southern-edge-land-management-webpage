@@ -207,9 +207,10 @@ header .tagline {
    ============================================ */
 
 .hero {
-    background: url('assets/hero-background.jpg');
+    background-image: url('assets/hero-background.jpg');
     background-size: cover;
     background-position: center center;
+    background-repeat: no-repeat;
     background-attachment: fixed;
     color: var(--color-white);
     text-align: center;
@@ -1039,6 +1040,8 @@ header .tagline {
     box-sizing: border-box;
     margin-bottom: var(--spacing-md);
     border: 2px solid rgba(255,255,255,0.2);
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .contact-info p {
@@ -1322,6 +1325,14 @@ footer {
     .photo-gallery-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .contact-info a {
+        font-size: clamp(1.2rem, 3vw, 2rem);
+    }
+
+    .contact-info p {
+        font-size: 1.6rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1393,7 +1404,9 @@ footer {
 
     .contact-info a {
         display: inline;
-        font-size: 1.1rem;
+        font-size: clamp(1rem, 4.5vw, 1.5rem);
+        word-break: break-all;
+        overflow-wrap: anywhere;
     }
 
     .cta-button {
