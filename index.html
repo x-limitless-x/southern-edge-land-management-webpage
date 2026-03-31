@@ -62,6 +62,9 @@
     <meta name="twitter:description" content="Family-owned landscaping and grading company specializing in land clearing, forestry mulching, drainage, and more. Call 704-866-1124 for a free estimate.">
     <meta name="twitter:image" content="https://southernedgelm.com/assets/gray-background-selm.jpg">
 
+    <script>
+        document.documentElement.classList.add('js');
+    </script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -296,7 +299,7 @@
             
             <!-- Featured Project Showcase -->
             <div class="featured-project">
-                <div class="featured-image">
+                <div class="featured-image lightbox-trigger" role="button" tabindex="0" aria-label="View full-size featured project photo" data-lightbox-caption="Featured Project — Complete site development with multi-level grading, retaining walls, and finished asphalt pad.">
                     <img src="assets/page/IMG_2295.JPEG" alt="Complete grading and retaining wall project with asphalt pad" loading="lazy">
                     <div class="featured-badge">⭐ Featured Project</div>
                 </div>
@@ -313,42 +316,42 @@
 
             <!-- Project Photo Grid -->
             <div class="photo-gallery-grid">
-                <div class="photo-card">
+                <div class="photo-card lightbox-trigger" role="button" tabindex="0" aria-label="View full-size project photo" data-lightbox-caption="Drainage Solutions — Professional drainage channel and stormwater management system.">
                     <img src="assets/page/IMG_2304.JPEG" alt="Professional drainage channel and stormwater management system" loading="lazy">
                     <div class="photo-overlay">
                         <h4>💧 Drainage Solutions</h4>
                         <p>Custom stormwater management</p>
                     </div>
                 </div>
-                <div class="photo-card">
+                <div class="photo-card lightbox-trigger" role="button" tabindex="0" aria-label="View full-size project photo" data-lightbox-caption="Retaining Walls — Multi-level stepped retaining walls with terraced elevation work.">
                     <img src="assets/page/IMG_2308.JPEG" alt="Multi-level stepped retaining walls with modern finish" loading="lazy">
                     <div class="photo-overlay">
                         <h4>🧱 Retaining Walls</h4>
                         <p>Terraced elevation work</p>
                     </div>
                 </div>
-                <div class="photo-card">
+                <div class="photo-card lightbox-trigger" role="button" tabindex="0" aria-label="View full-size project photo" data-lightbox-caption="Land Grading — Active hillside excavation and precision site preparation in progress.">
                     <img src="assets/page/IMG_4044.JPEG" alt="Active hillside excavation and grading in progress" loading="lazy">
                     <div class="photo-overlay">
                         <h4>🚜 Land Grading</h4>
                         <p>Precision site preparation</p>
                     </div>
                 </div>
-                <div class="photo-card">
+                <div class="photo-card lightbox-trigger" role="button" tabindex="0" aria-label="View full-size project photo" data-lightbox-caption="Quality Craftsmanship — Close-up view of textured retaining wall finish details.">
                     <img src="assets/page/IMG_2291.JPEG" alt="Close-up of textured concrete retaining wall detail" loading="lazy">
                     <div class="photo-overlay">
                         <h4>✨ Quality Craftsmanship</h4>
                         <p>Professional finish details</p>
                     </div>
                 </div>
-                <div class="photo-card">
+                <div class="photo-card lightbox-trigger" role="button" tabindex="0" aria-label="View full-size project photo" data-lightbox-caption="Land Clearing — Site preparation and clearing work to open up usable property space.">
                     <img src="assets/page/IMG_3312.JPEG" alt="Land management project example" loading="lazy">
                     <div class="photo-overlay">
                         <h4>🌲 Land Clearing</h4>
                         <p>Site preparation & clearing</p>
                     </div>
                 </div>
-                <div class="photo-card">
+                <div class="photo-card lightbox-trigger" role="button" tabindex="0" aria-label="View full-size project photo" data-lightbox-caption="Excavation — Professional grading and earth moving for site development.">
                     <img src="assets/page/IMG_4046.JPEG" alt="Professional grading and excavation work" loading="lazy">
                     <div class="photo-overlay">
                         <h4>🏗️ Excavation</h4>
@@ -511,6 +514,20 @@
         </div>
     </footer>
 
+    <div class="gallery-lightbox" id="gallery-lightbox" aria-hidden="true">
+        <div class="gallery-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Expanded project image">
+            <button type="button" class="gallery-lightbox-nav gallery-lightbox-prev" id="gallery-lightbox-prev" aria-label="Show previous project image">‹</button>
+            <button type="button" class="gallery-lightbox-close" id="gallery-lightbox-close" aria-label="Close expanded image">×</button>
+            <div class="gallery-lightbox-counter" id="gallery-lightbox-counter" aria-live="polite"></div>
+            <div class="gallery-lightbox-media" id="gallery-lightbox-media">
+                <img id="gallery-lightbox-image" src="" alt="">
+            </div>
+            <button type="button" class="gallery-lightbox-nav gallery-lightbox-next" id="gallery-lightbox-next" aria-label="Show next project image">›</button>
+            <p class="gallery-lightbox-caption" id="gallery-lightbox-caption"></p>
+            <div class="gallery-lightbox-thumbnails" id="gallery-lightbox-thumbnails" aria-label="Project image thumbnails"></div>
+        </div>
+    </div>
+
     <script>
         const facebookReviewsConfig = {
             // Use a secure backend endpoint that proxies the Facebook Graph API (e.g., https://yourdomain.com/api/facebook-reviews).
@@ -520,15 +537,38 @@
         };
 
         const maxReviewsToDisplay = 3;
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         const reviewsStatus = document.getElementById('facebook-reviews-status');
         const reviewsContainer = document.getElementById('facebook-reviews');
         const reviewLinks = document.querySelectorAll('[data-facebook-link]');
+        const galleryTriggers = document.querySelectorAll('.lightbox-trigger');
+        const galleryLightbox = document.getElementById('gallery-lightbox');
+        const galleryLightboxMedia = document.getElementById('gallery-lightbox-media');
+        const galleryLightboxImage = document.getElementById('gallery-lightbox-image');
+        const galleryLightboxCaption = document.getElementById('gallery-lightbox-caption');
+        const galleryLightboxCounter = document.getElementById('gallery-lightbox-counter');
+        const galleryLightboxThumbnails = document.getElementById('gallery-lightbox-thumbnails');
+        const galleryLightboxClose = document.getElementById('gallery-lightbox-close');
+        const galleryLightboxPrev = document.getElementById('gallery-lightbox-prev');
+        const galleryLightboxNext = document.getElementById('gallery-lightbox-next');
         const fallbackMarkup = reviewsContainer ? reviewsContainer.innerHTML : '';
         const facebookPageUrl = facebookReviewsConfig.pageBaseUrl
             ? facebookReviewsConfig.pageBaseUrl.replace(/\/$/, '')
             : '';
         const facebookReviewUrl = facebookPageUrl ? `${facebookPageUrl}&sk=reviews` : '';
+        const galleryItems = Array.from(galleryTriggers);
+        let lastLightboxTrigger = null;
+        let activeGalleryIndex = -1;
+        let touchStartX = 0;
+        let pinchStartDistance = 0;
+        let pinchStartScale = 1;
+        let activeLightboxScale = 1;
+        let lastTapTime = 0;
+        let lastTapX = 0;
+        let lastTapY = 0;
+        let lightboxCloseTimer = 0;
+        const lightboxAnimationDuration = prefersReducedMotion ? 0 : 360;
 
         const updateReviewLinks = () => {
             if (!reviewLinks.length) {
@@ -646,6 +686,396 @@
             return card;
         };
 
+        const getGalleryCaption = (trigger, image) => {
+            const customCaption = trigger.dataset.lightboxCaption?.trim();
+            if (customCaption) {
+                return customCaption;
+            }
+
+            const captionHeading = trigger.querySelector('h4')?.textContent?.trim();
+            const captionDescription = trigger.querySelector('.photo-overlay p')?.textContent?.trim();
+            const fallbackCaption = image.alt || 'Project photo';
+
+            return captionHeading
+                ? captionDescription ? `${captionHeading} — ${captionDescription}` : captionHeading
+                : fallbackCaption;
+        };
+
+        const updateLightboxNavigation = () => {
+            if (!galleryLightboxPrev || !galleryLightboxNext || !galleryItems.length) {
+                return;
+            }
+
+            const hasMultipleItems = galleryItems.length > 1;
+            galleryLightboxPrev.hidden = !hasMultipleItems;
+            galleryLightboxNext.hidden = !hasMultipleItems;
+        };
+
+        const clampLightboxScale = (value) => Math.min(3, Math.max(1, value));
+
+        const applyLightboxScale = (value) => {
+            if (!galleryLightboxMedia) {
+                return;
+            }
+
+            activeLightboxScale = clampLightboxScale(value);
+            galleryLightboxMedia.style.setProperty('--lightbox-scale', activeLightboxScale);
+        };
+
+        const resetLightboxScale = () => {
+            activeLightboxScale = 1;
+            pinchStartDistance = 0;
+            pinchStartScale = 1;
+
+            if (!galleryLightboxMedia) {
+                return;
+            }
+
+            galleryLightboxMedia.style.removeProperty('--lightbox-scale');
+            galleryLightboxMedia.style.removeProperty('--lightbox-zoom-x');
+            galleryLightboxMedia.style.removeProperty('--lightbox-zoom-y');
+        };
+
+        const getTouchDistance = (touches) => {
+            if (touches.length < 2) {
+                return 0;
+            }
+
+            const deltaX = touches[0].clientX - touches[1].clientX;
+            const deltaY = touches[0].clientY - touches[1].clientY;
+            return Math.hypot(deltaX, deltaY);
+        };
+
+        const setLightboxZoomOriginFromPoint = (clientX, clientY) => {
+            if (!galleryLightboxMedia) {
+                return;
+            }
+
+            const bounds = galleryLightboxMedia.getBoundingClientRect();
+            const x = ((clientX - bounds.left) / bounds.width) * 100;
+            const y = ((clientY - bounds.top) / bounds.height) * 100;
+
+            galleryLightboxMedia.style.setProperty('--lightbox-zoom-x', `${Math.min(100, Math.max(0, x))}%`);
+            galleryLightboxMedia.style.setProperty('--lightbox-zoom-y', `${Math.min(100, Math.max(0, y))}%`);
+        };
+
+        const updateLightboxMeta = () => {
+            if (galleryLightboxCounter && activeGalleryIndex >= 0) {
+                galleryLightboxCounter.textContent = `${activeGalleryIndex + 1} / ${galleryItems.length}`;
+            }
+
+            if (!galleryLightboxThumbnails) {
+                return;
+            }
+
+            galleryLightboxThumbnails.querySelectorAll('.gallery-lightbox-thumbnail').forEach((thumbnail, index) => {
+                const isActive = index === activeGalleryIndex;
+                thumbnail.classList.toggle('is-active', isActive);
+                thumbnail.setAttribute('aria-current', isActive ? 'true' : 'false');
+
+                if (isActive) {
+                    thumbnail.scrollIntoView({
+                        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+                        block: 'nearest',
+                        inline: 'center'
+                    });
+                }
+            });
+        };
+
+        const buildLightboxThumbnails = () => {
+            if (!galleryLightboxThumbnails || !galleryItems.length) {
+                return;
+            }
+
+            const fragment = document.createDocumentFragment();
+
+            galleryItems.forEach((trigger, index) => {
+                const image = trigger.querySelector('img');
+                if (!image) {
+                    return;
+                }
+
+                const thumbnail = document.createElement('button');
+                thumbnail.type = 'button';
+                thumbnail.className = 'gallery-lightbox-thumbnail';
+                thumbnail.setAttribute('aria-label', `Show project image ${index + 1}`);
+
+                const thumbnailImage = document.createElement('img');
+                thumbnailImage.src = image.currentSrc || image.src;
+                thumbnailImage.alt = image.alt || `Project image ${index + 1}`;
+
+                thumbnail.appendChild(thumbnailImage);
+                thumbnail.addEventListener('click', () => {
+                    showGalleryLightboxImage(index);
+                });
+
+                fragment.appendChild(thumbnail);
+            });
+
+            galleryLightboxThumbnails.innerHTML = '';
+            galleryLightboxThumbnails.appendChild(fragment);
+        };
+
+        const closeGalleryLightbox = () => {
+            if (!galleryLightbox || galleryLightbox.getAttribute('aria-hidden') === 'true') {
+                return;
+            }
+
+            window.clearTimeout(lightboxCloseTimer);
+            galleryLightbox.classList.add('is-closing');
+
+            lightboxCloseTimer = window.setTimeout(() => {
+                galleryLightbox.setAttribute('aria-hidden', 'true');
+                galleryLightbox.classList.remove('is-closing');
+                document.body.classList.remove('lightbox-open');
+                galleryLightboxImage.src = '';
+                galleryLightboxImage.alt = '';
+                galleryLightboxCaption.textContent = '';
+                if (galleryLightboxCounter) {
+                    galleryLightboxCounter.textContent = '';
+                }
+                activeGalleryIndex = -1;
+                resetLightboxScale();
+                lastTapTime = 0;
+
+                if (lastLightboxTrigger) {
+                    lastLightboxTrigger.focus();
+                    lastLightboxTrigger = null;
+                }
+            }, lightboxAnimationDuration);
+        };
+
+        const showGalleryLightboxImage = (index) => {
+            if (!galleryLightbox || !galleryLightboxImage || !galleryLightboxCaption) {
+                return;
+            }
+
+            const normalizedIndex = ((index % galleryItems.length) + galleryItems.length) % galleryItems.length;
+            const trigger = galleryItems[normalizedIndex];
+            const image = trigger.querySelector('img');
+            if (!image) {
+                return;
+            }
+
+            activeGalleryIndex = normalizedIndex;
+            lastLightboxTrigger = trigger;
+            galleryLightboxImage.src = image.currentSrc || image.src;
+            galleryLightboxImage.alt = image.alt || 'Project photo';
+            galleryLightboxCaption.textContent = getGalleryCaption(trigger, image);
+            resetLightboxScale();
+            updateLightboxMeta();
+        };
+
+        const openGalleryLightbox = (trigger) => {
+            if (!galleryItems.length) {
+                return;
+            }
+
+            const triggerIndex = galleryItems.indexOf(trigger);
+            if (triggerIndex < 0) {
+                return;
+            }
+
+            showGalleryLightboxImage(triggerIndex);
+            window.clearTimeout(lightboxCloseTimer);
+            galleryLightbox.classList.remove('is-closing');
+            galleryLightbox.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('lightbox-open');
+            updateLightboxNavigation();
+            galleryLightboxClose.focus();
+        };
+
+        const navigateGalleryLightbox = (direction) => {
+            if (galleryLightbox?.getAttribute('aria-hidden') === 'true' || activeGalleryIndex < 0 || !galleryItems.length) {
+                return;
+            }
+
+            showGalleryLightboxImage(activeGalleryIndex + direction);
+        };
+
+        const initializeGalleryLightbox = () => {
+            if (!galleryTriggers.length || !galleryLightbox || !galleryLightboxClose) {
+                return;
+            }
+
+            galleryTriggers.forEach((trigger) => {
+                trigger.addEventListener('click', () => {
+                    openGalleryLightbox(trigger);
+                });
+
+                trigger.addEventListener('keydown', (event) => {
+                    if (event.key !== 'Enter' && event.key !== ' ') {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    openGalleryLightbox(trigger);
+                });
+            });
+
+            galleryLightboxClose.addEventListener('click', closeGalleryLightbox);
+            galleryLightboxPrev?.addEventListener('click', () => navigateGalleryLightbox(-1));
+            galleryLightboxNext?.addEventListener('click', () => navigateGalleryLightbox(1));
+
+            galleryLightbox.addEventListener('click', (event) => {
+                if (event.target === galleryLightbox) {
+                    closeGalleryLightbox();
+                }
+            });
+
+            galleryLightboxMedia?.addEventListener('mousemove', (event) => {
+                if (activeLightboxScale <= 1) {
+                    return;
+                }
+
+                setLightboxZoomOriginFromPoint(event.clientX, event.clientY);
+            });
+
+            galleryLightboxMedia?.addEventListener('mouseenter', () => {
+                if (window.matchMedia('(hover: hover)').matches) {
+                    applyLightboxScale(1.7);
+                }
+            });
+
+            galleryLightboxMedia?.addEventListener('mouseleave', () => {
+                if (window.matchMedia('(hover: hover)').matches) {
+                    resetLightboxScale();
+                }
+            });
+
+            galleryLightboxMedia?.addEventListener('touchstart', (event) => {
+                if (event.touches.length === 2) {
+                    pinchStartDistance = getTouchDistance(event.touches);
+                    pinchStartScale = activeLightboxScale;
+                    touchStartX = 0;
+                    return;
+                }
+
+                touchStartX = event.changedTouches[0].clientX;
+            }, { passive: true });
+
+            galleryLightboxMedia?.addEventListener('touchmove', (event) => {
+                if (event.touches.length !== 2 || pinchStartDistance === 0) {
+                    return;
+                }
+
+                const currentDistance = getTouchDistance(event.touches);
+                if (!currentDistance) {
+                    return;
+                }
+
+                const nextScale = pinchStartScale * (currentDistance / pinchStartDistance);
+                applyLightboxScale(nextScale);
+            }, { passive: true });
+
+            galleryLightboxMedia?.addEventListener('touchend', (event) => {
+                if (event.touches.length < 2) {
+                    pinchStartDistance = 0;
+                }
+
+                const touch = event.changedTouches[0];
+                const currentTapTime = Date.now();
+                const isDoubleTap = currentTapTime - lastTapTime < 320
+                    && Math.abs(touch.clientX - lastTapX) < 24
+                    && Math.abs(touch.clientY - lastTapY) < 24;
+
+                if (touchStartX !== 0 && Math.abs(touch.clientX - touchStartX) < 16 && isDoubleTap) {
+                    setLightboxZoomOriginFromPoint(touch.clientX, touch.clientY);
+                    applyLightboxScale(activeLightboxScale > 1.2 ? 1 : 2.25);
+                    lastTapTime = 0;
+                    return;
+                }
+
+                lastTapTime = currentTapTime;
+                lastTapX = touch.clientX;
+                lastTapY = touch.clientY;
+
+                if (touchStartX === 0 || activeLightboxScale > 1.05) {
+                    return;
+                }
+
+                const touchEndX = touch.clientX;
+                const deltaX = touchEndX - touchStartX;
+
+                if (Math.abs(deltaX) < 40) {
+                    return;
+                }
+
+                navigateGalleryLightbox(deltaX > 0 ? -1 : 1);
+            }, { passive: true });
+
+            document.addEventListener('keydown', (event) => {
+                if (galleryLightbox?.getAttribute('aria-hidden') === 'true') {
+                    return;
+                }
+
+                if (event.key === 'Escape') {
+                    closeGalleryLightbox();
+                    return;
+                }
+
+                if (event.key === 'ArrowLeft') {
+                    navigateGalleryLightbox(-1);
+                    return;
+                }
+
+                if (event.key === 'ArrowRight') {
+                    navigateGalleryLightbox(1);
+                }
+            });
+
+            buildLightboxThumbnails();
+            updateLightboxNavigation();
+        };
+
+        const initializeScrollAnimations = () => {
+            if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+                return;
+            }
+
+            const revealTargets = document.querySelectorAll([
+                '.section-header',
+                '.feature-item',
+                '.service-card',
+                '.why-item',
+                '.about-text',
+                '.about-stats',
+                '.about-me-text',
+                '.about-me-image',
+                '.featured-project',
+                '.photo-card',
+                '.gallery-card',
+                '.testimonial-card',
+                '.contact-content',
+                '.footer-section',
+                '.footer-bottom'
+            ].join(', '));
+
+            revealTargets.forEach((element, index) => {
+                element.classList.add('reveal-on-scroll');
+                element.style.setProperty('--reveal-delay', `${(index % 4) * 0.08}s`);
+            });
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: '0px 0px -10% 0px'
+            });
+
+            revealTargets.forEach((element) => {
+                revealObserver.observe(element);
+            });
+        };
+
         const loadFacebookReviews = async () => {
             if (!reviewsContainer || !reviewsStatus) {
                 return;
@@ -699,6 +1129,8 @@
             }
         };
 
+        initializeGalleryLightbox();
+        initializeScrollAnimations();
         loadFacebookReviews();
     </script>
 </body>
