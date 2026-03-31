@@ -117,6 +117,18 @@ body {
     }
 }
 
+@keyframes hero-background-fade-in {
+    from {
+        opacity: 0;
+        transform: scale(1.03);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 @keyframes header-slide-in {
     from {
         opacity: 0;
@@ -171,6 +183,42 @@ body {
     }
 }
 
+@keyframes header-contact-phone-in {
+    from {
+        opacity: 0;
+        transform: translateX(18px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes header-contact-note-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 0.95;
+        transform: translateY(0);
+    }
+}
+
+@keyframes logo-scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.86);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     body {
         animation: none;
@@ -178,8 +226,12 @@ body {
 
     header,
     .hero-content,
+    .hero::before,
+    .logo-image,
     header h1,
-    header .tagline {
+    header .tagline,
+    .header-phone,
+    .header-cta-small {
         animation: none;
     }
 
@@ -261,6 +313,7 @@ header {
     height: 80px;
     width: auto;
     object-fit: contain;
+    animation: logo-scale-in 0.68s cubic-bezier(0.22, 1, 0.36, 1) 0.14s both;
 }
 
 .logo-text {
@@ -294,6 +347,7 @@ header .tagline {
     text-decoration: none;
     display: block;
     margin-bottom: 0.3rem;
+    animation: header-contact-phone-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.38s both;
 }
 
 .header-phone:hover {
@@ -308,6 +362,7 @@ header .tagline {
     font-size: 0.9rem;
     color: var(--color-white);
     opacity: 0.95;
+    animation: header-contact-note-in 0.7s ease-out 0.58s both;
 }
 
 /* ============================================
@@ -315,16 +370,11 @@ header .tagline {
    ============================================ */
 
 .hero {
-    background-image: url('assets/hero-background.jpg');
-    background-size: cover;
-    /* allow vertical focus via variable so we can show the tractor more easily */
-    background-position: center var(--hero-image-position-y, center);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
     color: var(--color-white);
     text-align: center;
     padding: 6rem 0;
     position: relative;
+    overflow: hidden;
 }
 
 .hero::before {
@@ -334,20 +384,27 @@ header .tagline {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(to bottom,
-        rgba(26, 32, 44, 0.70) 0%,
-        rgba(45, 55, 72, 0.55) 50%,
-        rgba(255, 255, 255, 0.0) 100%);
+    background-image: url('assets/hero-background.jpg');
+    background-size: cover;
+    background-position: center var(--hero-image-position-y, center);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    animation: hero-background-fade-in 1.45s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
 }
 
 .hero::after {
     content: '';
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 120px;
-    background: linear-gradient(to bottom, transparent, var(--color-white));
+    inset: 0;
+    background:
+        linear-gradient(to bottom,
+            rgba(26, 32, 44, 0.70) 0%,
+            rgba(45, 55, 72, 0.55) 50%,
+            rgba(255, 255, 255, 0.0) 100%),
+        linear-gradient(to bottom,
+            transparent 0%,
+            transparent calc(100% - 120px),
+            var(--color-white) 100%);
     pointer-events: none;
 }
 
