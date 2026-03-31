@@ -729,7 +729,7 @@ header .tagline {
     color: var(--color-gray);
 }
 
-.stars {
+.review-recommendation {
     color: var(--color-accent-yellow);
     font-size: 1.2rem;
     margin-bottom: var(--spacing-sm);
@@ -1165,6 +1165,19 @@ footer {
     padding-top: 1.5rem;
     text-align: center;
     opacity: 0.8;
+}
+
+.footer-credit a {
+    color: rgba(255,255,255,0.9);
+    text-decoration: underline;
+}
+
+.footer-credit a:visited {
+    color: rgba(255,255,255,0.85);
+}
+
+.footer-credit a:hover {
+    color: var(--color-accent-yellow);
 }
 
 /* ============================================

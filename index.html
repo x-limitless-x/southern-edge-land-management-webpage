@@ -397,7 +397,7 @@
             <div class="testimonials-grid" id="facebook-reviews">
                 <div class="testimonial-card">
                     <div class="quote-icon">"</div>
-                    <div class="stars">★★★★★</div>
+                    <div class="review-recommendation">👍 Recommended</div>
                     <p class="testimonial-text">
                         "John and I lucked out with this recommendation! Special thanks to Scott at England's Lawn Care &amp; Maintenance LLC for the connection. We admittedly have neglected our yard for far too long, letting materials deteriorate and erosion wash away our front yard. Dylan was prompt to call, true to his word, communicated the schedule and was on-site when he said he would be. He talked to us about options to slow/direct water flow and replace a collapsing driveway retaining wall, providing us with a detailed estimate once we decided what would work and look best. We were so happy with the look of the retaining wall once he started, we added removing an old block wall that connected along the sidewalk for a cohesive look. The additional materials were quickly delivered and he worked late to keep the project on schedule. Once the wall was complete, he scheduled the needed materials to build our front yard back up, adding a catch basin and pipe to direct waterflow into the back yard. All the earthwork was completed in one day. Dylan has an incredible work ethic and takes great pride in the finished product. We’ve already discussed phase 2 and 3 projects and look forward to working with this company again."
                     </p>
@@ -410,7 +410,7 @@
                 </div>
                 <div class="testimonial-card">
                     <div class="quote-icon">"</div>
-                    <div class="stars">★★★★★</div>
+                    <div class="review-recommendation">👍 Recommended</div>
                     <p class="testimonial-text">
                         "Dylan was contracted to my home to do erosion control 1 week ago in my backyard after my inground pool was installed, he did a Great job and I would recommend him anytime and will call him in the future if needed."
                     </p>
@@ -423,7 +423,7 @@
                 </div>
                 <div class="testimonial-card">
                     <div class="quote-icon">"</div>
-                    <div class="stars">★★★★★</div>
+                    <div class="review-recommendation">👍 Recommended</div>
                     <p class="testimonial-text">
                         "Dylan graded off a large area in my back yard and he did a great job."
                     </p>
@@ -501,6 +501,7 @@
             <div class="footer-bottom">
                 <p>&copy; 2026 Southern Edge Land Management. All rights reserved.</p>
                 <p>Professional Landscaping & Grading Services</p>
+                <p class="footer-credit">Website created by <a href="https://blakedrumm.com/" target="_blank" rel="noopener noreferrer">Blake Drumm</a></p>
                 <p class="footer-legal-links">
                     <a href="privacy-policy.html">Privacy Policy</a>
                     <span class="footer-link-separator">|</span>
@@ -571,14 +572,20 @@
             return [];
         };
 
-        const buildStars = (ratingValue) => {
-            const normalized = Number.isFinite(ratingValue)
-                ? Math.min(Math.max(Math.round(ratingValue), 0), 5)
-                : 0;
-            if (normalized === 0) {
-                return '☆☆☆☆☆';
+        const getRecommendationLabel = (review) => {
+            const recommendationType = typeof review.recommendation_type === 'string'
+                ? review.recommendation_type.toLowerCase()
+                : '';
+
+            if (recommendationType.includes('negative') || recommendationType.includes('not_recommended') || review.recommendation === false) {
+                return '👎 Not Recommended';
             }
-            return `${'★'.repeat(normalized)}${'☆'.repeat(5 - normalized)}`;
+
+            if (recommendationType.includes('positive') || recommendationType.includes('recommended') || review.recommendation === true) {
+                return '👍 Recommended';
+            }
+
+            return '👍 Recommended';
         };
 
         const formatReviewDate = (dateValue) => {
@@ -605,16 +612,13 @@
             quote.className = 'quote-icon';
             quote.textContent = '"';
 
-            const stars = document.createElement('div');
-            stars.className = 'stars';
-            stars.textContent = buildStars(Number(review.rating));
+            const recommendation = document.createElement('div');
+            recommendation.className = 'review-recommendation';
+            recommendation.textContent = getRecommendationLabel(review);
 
             const text = document.createElement('p');
             text.className = 'testimonial-text';
-            const ratingValue = Number(review.rating);
-            const fallbackMessage = Number.isFinite(ratingValue)
-                ? `Rated ${Math.round(ratingValue)} stars on Facebook.`
-                : 'Shared a recommendation on Facebook.';
+            const fallbackMessage = getRecommendationLabel(review);
             const reviewText = review.trimmedText ?? '';
             text.textContent = reviewText ? reviewText : fallbackMessage;
 
@@ -637,7 +641,7 @@
             source.textContent = 'Facebook Review';
 
             meta.append(date, source);
-            card.append(quote, stars, text, author, location, meta);
+            card.append(quote, recommendation, text, author, location, meta);
 
             return card;
         };
@@ -664,7 +668,7 @@
                     throw new Error(`Facebook reviews request failed (${response.status}).`);
                 }
 
-                // Expected review fields from Facebook: review_text, reviewer{name}, rating, created_time.
+                // Expected review fields from Facebook: review_text, reviewer{name}, recommendation_type/recommendation, created_time.
                 const payload = await response.json();
                 const reviews = extractReviews(payload);
                 const trimmed = reviews
@@ -674,8 +678,8 @@
                     })
                     .filter((review) => {
                         const hasText = review.trimmedText.length > 0;
-                        const ratingValue = Number(review.rating);
-                        return hasText || Number.isFinite(ratingValue);
+                        const hasRecommendation = typeof review.recommendation_type === 'string' || typeof review.recommendation === 'boolean';
+                        return hasText || hasRecommendation;
                     })
                     .slice(0, maxReviewsToDisplay);
 
