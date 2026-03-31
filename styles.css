@@ -48,6 +48,9 @@
     --spacing-md: 2rem;
     --spacing-lg: 3rem;
     --spacing-xl: 5rem;
+
+    --about-me-image-focus-x: 58%;
+    --about-me-image-focus-y: 40%;
     
     /* Typography */
     --font-family-primary: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -631,7 +634,7 @@ header .tagline {
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
-    object-position: 58% 40%;
+    object-position: var(--about-me-image-focus-x) var(--about-me-image-focus-y);
     border-radius: calc(2rem - 0.9rem);
     box-shadow: 0 12px 30px rgba(45, 55, 72, 0.16);
 }
