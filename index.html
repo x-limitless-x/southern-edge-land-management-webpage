@@ -564,6 +564,12 @@
         let pinchStartDistance = 0;
         let pinchStartScale = 1;
         let activeLightboxScale = 1;
+        let lightboxPanX = 0;
+        let lightboxPanY = 0;
+        let panStartX = 0;
+        let panStartY = 0;
+        let panOriginX = 0;
+        let panOriginY = 0;
         let lastTapTime = 0;
         let lastTapX = 0;
         let lastTapY = 0;
@@ -713,6 +719,54 @@
 
         const clampLightboxScale = (value) => Math.min(3, Math.max(1, value));
 
+        const getLightboxPanBounds = (scale = activeLightboxScale) => {
+            if (!galleryLightboxMedia || !galleryLightboxImage) {
+                return { maxX: 0, maxY: 0 };
+            }
+
+            const scaledWidth = galleryLightboxImage.offsetWidth * scale;
+            const scaledHeight = galleryLightboxImage.offsetHeight * scale;
+            const maxX = Math.max(0, (scaledWidth - galleryLightboxMedia.clientWidth) / 2);
+            const maxY = Math.max(0, (scaledHeight - galleryLightboxMedia.clientHeight) / 2);
+
+            return { maxX, maxY };
+        };
+
+        const setLightboxPan = (x, y, scale = activeLightboxScale) => {
+            if (!galleryLightboxMedia) {
+                return;
+            }
+
+            const { maxX, maxY } = getLightboxPanBounds(scale);
+            lightboxPanX = Math.min(maxX, Math.max(-maxX, x));
+            lightboxPanY = Math.min(maxY, Math.max(-maxY, y));
+
+            galleryLightboxMedia.style.setProperty('--lightbox-pan-x', `${lightboxPanX}px`);
+            galleryLightboxMedia.style.setProperty('--lightbox-pan-y', `${lightboxPanY}px`);
+        };
+
+        const updateLightboxZoomState = () => {
+            if (!galleryLightboxMedia) {
+                return;
+            }
+
+            galleryLightboxMedia.classList.toggle('is-zoomed', activeLightboxScale > 1.05);
+        };
+
+        const focusLightboxZoomOnPoint = (clientX, clientY, scale = activeLightboxScale) => {
+            if (!galleryLightboxMedia) {
+                return;
+            }
+
+            const bounds = galleryLightboxMedia.getBoundingClientRect();
+            const offsetX = clientX - (bounds.left + bounds.width / 2);
+            const offsetY = clientY - (bounds.top + bounds.height / 2);
+            const nextPanX = -(offsetX * (scale - 1));
+            const nextPanY = -(offsetY * (scale - 1));
+
+            setLightboxPan(nextPanX, nextPanY, scale);
+        };
+
         const applyLightboxScale = (value) => {
             if (!galleryLightboxMedia) {
                 return;
@@ -720,20 +774,31 @@
 
             activeLightboxScale = clampLightboxScale(value);
             galleryLightboxMedia.style.setProperty('--lightbox-scale', activeLightboxScale);
+            updateLightboxZoomState();
+            setLightboxPan(lightboxPanX, lightboxPanY, activeLightboxScale);
         };
 
         const resetLightboxScale = () => {
             activeLightboxScale = 1;
             pinchStartDistance = 0;
             pinchStartScale = 1;
+            lightboxPanX = 0;
+            lightboxPanY = 0;
+            panStartX = 0;
+            panStartY = 0;
+            panOriginX = 0;
+            panOriginY = 0;
 
             if (!galleryLightboxMedia) {
                 return;
             }
 
             galleryLightboxMedia.style.removeProperty('--lightbox-scale');
+            galleryLightboxMedia.style.removeProperty('--lightbox-pan-x');
+            galleryLightboxMedia.style.removeProperty('--lightbox-pan-y');
             galleryLightboxMedia.style.removeProperty('--lightbox-zoom-x');
             galleryLightboxMedia.style.removeProperty('--lightbox-zoom-y');
+            updateLightboxZoomState();
         };
 
         const getTouchDistance = (touches) => {
@@ -949,6 +1014,18 @@
                     pinchStartDistance = getTouchDistance(event.touches);
                     pinchStartScale = activeLightboxScale;
                     touchStartX = 0;
+                    panStartX = 0;
+                    panStartY = 0;
+                    return;
+                }
+
+                if (activeLightboxScale > 1.05) {
+                    const touch = event.changedTouches[0];
+                    panStartX = touch.clientX;
+                    panStartY = touch.clientY;
+                    panOriginX = lightboxPanX;
+                    panOriginY = lightboxPanY;
+                    touchStartX = 0;
                     return;
                 }
 
@@ -957,6 +1034,13 @@
 
             galleryLightboxMedia?.addEventListener('touchmove', (event) => {
                 if (event.touches.length !== 2 || pinchStartDistance === 0) {
+                    if (activeLightboxScale > 1.05 && panStartX !== 0 && panStartY !== 0) {
+                        const touch = event.touches[0];
+                        const deltaX = touch.clientX - panStartX;
+                        const deltaY = touch.clientY - panStartY;
+                        setLightboxPan(panOriginX + deltaX, panOriginY + deltaY);
+                    }
+
                     return;
                 }
 
@@ -974,6 +1058,13 @@
                     pinchStartDistance = 0;
                 }
 
+                const wasPanning = panStartX !== 0 && panStartY !== 0 && activeLightboxScale > 1.05;
+                if (wasPanning) {
+                    panStartX = 0;
+                    panStartY = 0;
+                    return;
+                }
+
                 const touch = event.changedTouches[0];
                 const currentTapTime = Date.now();
                 const isDoubleTap = currentTapTime - lastTapTime < 320
@@ -981,8 +1072,13 @@
                     && Math.abs(touch.clientY - lastTapY) < 24;
 
                 if (touchStartX !== 0 && Math.abs(touch.clientX - touchStartX) < 16 && isDoubleTap) {
-                    setLightboxZoomOriginFromPoint(touch.clientX, touch.clientY);
-                    applyLightboxScale(activeLightboxScale > 1.2 ? 1 : 2.25);
+                    const nextScale = activeLightboxScale > 1.2 ? 1 : 2.25;
+                    applyLightboxScale(nextScale);
+
+                    if (nextScale > 1) {
+                        focusLightboxZoomOnPoint(touch.clientX, touch.clientY, nextScale);
+                    }
+
                     lastTapTime = 0;
                     return;
                 }
