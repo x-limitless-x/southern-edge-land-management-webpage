@@ -51,6 +51,8 @@
 
     --about-me-image-focus-x: 58%;
     --about-me-image-focus-y: 40%;
+    --about-me-frame-padding: 0.9rem;
+    --about-me-frame-radius: 2rem;
     
     /* Typography */
     --font-family-primary: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -559,7 +561,7 @@ header .tagline {
 
 .about-me-content {
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
     gap: 4rem;
     align-items: start;
     margin-top: var(--spacing-lg);
@@ -595,9 +597,9 @@ header .tagline {
 .about-me-image::before {
     content: "";
     position: absolute;
-    inset: 2.5rem -1.25rem -1.25rem 2rem;
+    inset: 1.25rem -1.25rem -1.25rem 2rem;
     background: linear-gradient(135deg, rgba(71, 85, 105, 0.16), rgba(255, 215, 0, 0.12));
-    border-radius: 2rem;
+    border-radius: var(--about-me-frame-radius);
     z-index: 0;
 }
 
@@ -605,6 +607,7 @@ header .tagline {
     position: relative;
     z-index: 1;
     justify-self: end;
+    margin-top: -2rem;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -623,9 +626,9 @@ header .tagline {
 .about-me-image-frame {
     position: relative;
     z-index: 1;
-    padding: 0.9rem;
+    padding: var(--about-me-frame-padding);
     background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(226, 232, 240, 0.95));
-    border-radius: 2rem;
+    border-radius: var(--about-me-frame-radius);
     box-shadow: 0 20px 45px rgba(45, 55, 72, 0.18);
 }
 
@@ -635,7 +638,7 @@ header .tagline {
     aspect-ratio: 4 / 5;
     object-fit: cover;
     object-position: var(--about-me-image-focus-x) var(--about-me-image-focus-y);
-    border-radius: calc(2rem - 0.9rem);
+    border-radius: calc(var(--about-me-frame-radius) - var(--about-me-frame-padding));
     box-shadow: 0 12px 30px rgba(45, 55, 72, 0.16);
 }
 
@@ -1316,13 +1319,14 @@ footer {
 
     .about-me-badge {
         justify-self: center;
+        margin-top: -1.5rem;
         text-align: center;
         font-size: 0.75rem;
         line-height: 1.4;
     }
 
     .about-me-image::before {
-        inset: 2rem -0.75rem -0.75rem 1.25rem;
+        inset: 1rem -0.75rem -0.75rem 1.25rem;
     }
 
     .hero-subtitle {
