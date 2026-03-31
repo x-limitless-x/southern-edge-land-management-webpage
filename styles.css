@@ -51,8 +51,19 @@
 
     --about-me-image-focus-x: 58%;
     --about-me-image-focus-y: 40%;
+    --about-me-image-min-width: 18rem;
     --about-me-frame-padding: 0.9rem;
     --about-me-frame-radius: 2rem;
+    --about-me-accent-inset-top: 1.25rem;
+    --about-me-accent-inset-right: -1.25rem;
+    --about-me-accent-inset-bottom: -1.25rem;
+    --about-me-accent-inset-left: 2rem;
+    --about-me-accent-inset-top-mobile: 1rem;
+    --about-me-accent-inset-right-mobile: -0.75rem;
+    --about-me-accent-inset-bottom-mobile: -0.75rem;
+    --about-me-accent-inset-left-mobile: 1.25rem;
+    --about-me-badge-overlap: -2rem;
+    --about-me-badge-overlap-mobile: -1.5rem;
     
     /* Typography */
     --font-family-primary: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -561,7 +572,7 @@ header .tagline {
 
 .about-me-content {
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(var(--about-me-image-min-width), 0.8fr);
     gap: 4rem;
     align-items: start;
     margin-top: var(--spacing-lg);
@@ -597,7 +608,7 @@ header .tagline {
 .about-me-image::before {
     content: "";
     position: absolute;
-    inset: 1.25rem -1.25rem -1.25rem 2rem;
+    inset: var(--about-me-accent-inset-top) var(--about-me-accent-inset-right) var(--about-me-accent-inset-bottom) var(--about-me-accent-inset-left);
     background: linear-gradient(135deg, rgba(71, 85, 105, 0.16), rgba(255, 215, 0, 0.12));
     border-radius: var(--about-me-frame-radius);
     z-index: 0;
@@ -607,7 +618,7 @@ header .tagline {
     position: relative;
     z-index: 1;
     justify-self: end;
-    margin-top: -2rem;
+    margin-top: var(--about-me-badge-overlap);
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -1319,14 +1330,14 @@ footer {
 
     .about-me-badge {
         justify-self: center;
-        margin-top: -1.5rem;
+        margin-top: var(--about-me-badge-overlap-mobile);
         text-align: center;
         font-size: 0.75rem;
         line-height: 1.4;
     }
 
     .about-me-image::before {
-        inset: 1rem -0.75rem -0.75rem 1.25rem;
+        inset: var(--about-me-accent-inset-top-mobile) var(--about-me-accent-inset-right-mobile) var(--about-me-accent-inset-bottom-mobile) var(--about-me-accent-inset-left-mobile);
     }
 
     .hero-subtitle {
